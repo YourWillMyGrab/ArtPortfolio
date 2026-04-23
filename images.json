@@ -5,20 +5,22 @@
     { "src": "images/vetrinetta/03-stillness.jpg",   "title": "Stillness",    "desc": "" }
   ],
   "digitale": [
-    { "src": "images/digital/01-neon-reverie.jpg",   "title": "Neon Reverie",   "desc": "" },
-    { "src": "images/digital/02-circuit-dreams.jpg", "title": "Circuit Dreams", "desc": "" },
-    { "src": "images/digital/03-pixel-quiet.jpg",    "title": "Pixel Quiet",    "desc": "" },
-    { "src": "images/digital/04-echo.jpg",           "title": "Echo",           "desc": "" },
-    { "src": "images/digital/05-new-test.jpg",       "title": "New Test",       "desc": "" }
+    { "src": "images/digitale/01-neon-reverie.jpg",   "title": "Neon Reverie",   "desc": "" },
+    { "src": "images/digitale/02-circuit-dreams.jpg", "title": "Circuit Dreams", "desc": "" },
+    { "src": "images/digitale/03-pixel-quiet.jpg",    "title": "Pixel Quiet",    "desc": "" },
+    { "src": "images/digitale/04-echo.jpg",           "title": "Echo",           "desc": "" },
+    { "src": "images/digitale/05-new-test.jpg",       "title": "New Test",       "desc": "" }
   ],
   "tradizionale": [
-    { "src": "images/traditional/01-morning-study.jpg", "title": "Morning Study", "desc": "" },
-    { "src": "images/traditional/02-golden-hour.jpg",   "title": "Golden Hour",   "desc": "" },
-    { "src": "images/traditional/03-ink-no-7.jpg",      "title": "Ink No. 7",     "desc": "" }
+    { "src": "images/tradizionale/01-morning-study.jpg", "title": "Morning Study", "desc": "" },
+    { "src": "images/tradizionale/02-golden-hour.jpg",   "title": "Golden Hour",   "desc": "" },
+    { "src": "images/tradizionale/03-ink-no-7.jpg",      "title": "Ink No. 7",     "desc": "" }
   ],
   "sketch": [
-    { "src": "images/sketch/01-vessel-i.jpg", "title": "Vessel I", "desc": "" },
-    { "src": "images/sketch/02-tension.jpg",  "title": "Tension",  "desc": "" }
+    { "src": "images/sketch/01-vessel-i.jpg",  "title": "Vessel I", "desc": "" },
+    { "src": "images/sketch/02-tension.jpg",   "title": "Tension",  "desc": "" },
+    { "src": "images/sketch/03-test.jpg",      "title": "Test",     "desc": "" },
+    { "src": "images/sketch/04-flowers.jpg",   "title": "Flowers",  "desc": "" }
   ],
   "wip": [],
   "about": "images/about/portrait.jpg"

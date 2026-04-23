@@ -703,9 +703,9 @@
 <!-- ─── Navigation ──────────────────────────────────────────────────────────── -->
 <nav id="nav">
     <div class="container">
-        <a class="nav-logo" href="#vetrinetta">Artist Name</a>
+        <a class="nav-logo" href="#vetrinetta">Flaviowski</a>
         <ul class="nav-links">
-            <li><a href="#vetrinetta" class="active">Vetrinetta</a></li>
+            <li><a href="#vetrinetta" class="active">Flaviowski</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#shop">Commissions</a></li>
@@ -724,7 +724,7 @@
 
 <!-- Mobile menu -->
 <div id="mobile-menu">
-    <a href="#vetrinetta" onclick="closeMenu()">Vetrinetta</a>
+    <a href="#vetrinetta" onclick="closeMenu()">Flaviowski</a>
     <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
     <a href="#about" onclick="closeMenu()">About</a>
     <a href="#shop" onclick="closeMenu()">Commissions</a>
@@ -736,8 +736,8 @@
 <section id="vetrinetta" class="section">
     <div class="container">
         <div class="section-header">
-            <h1>Vetrinetta</h1>
-            <p>Handpicked highlights from my collection</p>
+            <h1>Flaviowski</h1>
+            <p>Dove la musica diviene immagine</p>
         </div>
 
         <div class="art-grid" id="vetrinetta-grid" style="grid-template-columns: repeat(2,1fr);"></div>
@@ -759,24 +759,30 @@
         </div>
 
         <div class="tabs-nav">
-            <button class="tab-link active" onclick="showTab('digital', this)">Digital</button>
-            <button class="tab-link" onclick="showTab('traditional', this)">Traditional</button>
-            <button class="tab-link" onclick="showTab('sculpture', this)">Sculpture</button>
+            <button class="tab-link active" onclick="showTab('digitale', this)">Digitale</button>
+            <button class="tab-link" onclick="showTab('tradizionale', this)">Tradizionale</button>
+            <button class="tab-link" onclick="showTab('sketch', this)">Sketch</button>
+            <button class="tab-link" onclick="showTab('wip', this)">WIP</button>
         </div>
 
-        <!-- Digital -->
-        <div id="digital" class="tab-content active">
-            <div class="art-grid" id="digital-grid"></div>
+        <!-- Digitale -->
+        <div id="digitale" class="tab-content active">
+            <div class="art-grid" id="digitale-grid"></div>
         </div>
 
-        <!-- Traditional -->
-        <div id="traditional" class="tab-content">
-            <div class="art-grid" id="traditional-grid"></div>
+        <!-- Tradizionale -->
+        <div id="tradizionale" class="tab-content">
+            <div class="art-grid" id="tradizionale-grid"></div>
         </div>
 
-        <!-- Sculpture -->
-        <div id="sculpture" class="tab-content">
-            <div class="art-grid" id="sculpture-grid"></div>
+        <!-- Sketch -->
+        <div id="sketch" class="tab-content">
+            <div class="art-grid" id="sketch-grid"></div>
+        </div>
+
+        <!-- WIP -->
+        <div id="wip" class="tab-content">
+            <div class="art-grid" id="wip-grid"></div>
         </div>
     </div>
 </section>
@@ -975,10 +981,11 @@
     }
 
     function renderPortfolio(data) {
-        renderGrid(document.getElementById('vetrinetta-grid'),  data.vetrinetta  || []);
-        renderGrid(document.getElementById('digital-grid'),     data.digital     || []);
-        renderGrid(document.getElementById('traditional-grid'), data.traditional || []);
-        renderGrid(document.getElementById('sculpture-grid'),   data.sculpture   || []);
+        renderGrid(document.getElementById('vetrinetta-grid'),    data.vetrinetta    || []);
+        renderGrid(document.getElementById('digitale-grid'),      data.digitale      || []);
+        renderGrid(document.getElementById('tradizionale-grid'),  data.tradizionale  || []);
+        renderGrid(document.getElementById('sketch-grid'),        data.sketch        || []);
+        renderGrid(document.getElementById('wip-grid'),           data.wip           || []);
         renderAbout(data.about || '');
     }
 
@@ -993,7 +1000,7 @@
             .then(r => { if (!r.ok) throw new Error('images.json not found'); return r.json(); })
             .then(renderPortfolio)
             .catch(() => {
-                ['vetrinetta-grid','digital-grid','traditional-grid','sculpture-grid'].forEach(id => {
+                ['vetrinetta-grid','digitale-grid','tradizionale-grid','sketch-grid','wip-grid'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.innerHTML = '<p class="empty-grid">Could not load images.json.</p>';
                 });
