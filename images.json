@@ -16,6 +16,8 @@
     { "src": "images/tradizionale/02-golden-hour.jpg",   "title": "Golden Hour",   "desc": "" },
     { "src": "images/tradizionale/03-ink-no-7.jpg",      "title": "Ink No. 7",     "desc": "" }
   ],
+  "digitale": [],
+  "tradizionale": [],
   "sketch": [
     { "src": "images/sketch/01-vessel-i.jpg",  "title": "Vessel I", "desc": "" },
     { "src": "images/sketch/02-tension.jpg",   "title": "Tension",  "desc": "" },
