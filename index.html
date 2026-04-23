@@ -981,7 +981,12 @@
 
     /* ── Bootstrap ──────────────────────────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', () => {
-        fetch('images.json')
+        // version.json is always fetched fresh (no-cache) so its SHA busts
+        // the images.json cache for clients with stale content.
+        fetch('version.json?nocache=' + Date.now())
+            .then(r => r.ok ? r.json() : { sha: 'v1' })
+            .catch(() => ({ sha: 'v1' }))
+            .then(({ sha }) => fetch('images.json?v=' + sha))
             .then(r => { if (!r.ok) throw new Error('images.json not found'); return r.json(); })
             .then(renderPortfolio)
             .catch(() => {

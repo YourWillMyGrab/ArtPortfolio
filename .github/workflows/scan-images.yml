@@ -89,10 +89,11 @@ jobs:
           print(f"  about: {result['about'] or '(none)'}")
           EOF
 
-      - name: Commit updated images.json
+      - name: Commit updated images.json and version.json
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add images.json
-          git diff --cached --quiet || git commit -m "chore: update images.json [skip ci]"
+          echo "{\"sha\":\"$(git rev-parse --short HEAD)\"}" > version.json
+          git add images.json version.json
+          git diff --cached --quiet || git commit -m "chore: update images.json + version.json [skip ci]"
           git push
