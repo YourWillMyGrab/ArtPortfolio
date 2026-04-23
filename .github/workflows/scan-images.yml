@@ -27,7 +27,7 @@ jobs:
           import os, json, re
 
           IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
-          CATEGORIES = ['vetrinetta', 'digital', 'traditional', 'sculpture']
+          CATEGORIES = ['vetrinetta', 'digitale', 'tradizionale', 'sketch', 'wip']
 
           def slug_to_title(filename):
               stem = os.path.splitext(filename)[0]        # strip extension
