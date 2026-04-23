@@ -75,6 +75,11 @@
       "src": "images/sculpture/03-test.jpg",
       "title": "Test",
       "desc": ""
+    },
+    {
+      "src": "images/sculpture/04-flowers.jpg",
+      "title": "Flowers",
+      "desc": ""
     }
   ],
   "about": "images/about/portrait.jpg"
