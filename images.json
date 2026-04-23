@@ -70,6 +70,11 @@
       "src": "images/sculpture/02-tension.jpg",
       "title": "Tension",
       "desc": ""
+    },
+    {
+      "src": "images/sculpture/03-test.jpg",
+      "title": "Test",
+      "desc": ""
     }
   ],
   "about": "images/about/portrait.jpg"
