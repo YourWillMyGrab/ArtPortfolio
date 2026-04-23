@@ -1,0 +1,98 @@
+name: Scan images and update images.json
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'images/**'
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate images.json
+        run: |
+          python3 - <<'EOF'
+          import os, json, re
+
+          IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.webp', '.gif'}
+          CATEGORIES = ['vetrinetta', 'digital', 'traditional', 'sculpture']
+
+          def slug_to_title(filename):
+              stem = os.path.splitext(filename)[0]        # strip extension
+              stem = re.sub(r'^\d+[-_]', '', stem)        # strip leading order prefix (e.g. "01-")
+              stem = stem.replace('-', ' ').replace('_', ' ')
+              return stem.title()
+
+          # Load existing manifest to preserve user-edited titles/descriptions
+          manifest_path = 'images.json'
+          try:
+              with open(manifest_path) as f:
+                  existing = json.load(f)
+          except (FileNotFoundError, json.JSONDecodeError):
+              existing = {}
+
+          def existing_meta(category, src):
+              for item in existing.get(category, []):
+                  if item.get('src') == src:
+                      return item
+              return None
+
+          result = {}
+
+          # Scan category folders
+          for cat in CATEGORIES:
+              folder = os.path.join('images', cat)
+              items = []
+              if os.path.isdir(folder):
+                  files = sorted(
+                      f for f in os.listdir(folder)
+                      if os.path.splitext(f)[1].lower() in IMAGE_EXTS
+                  )
+                  for fname in files:
+                      src = f'images/{cat}/{fname}'
+                      meta = existing_meta(cat, src) or {}
+                      items.append({
+                          'src':   src,
+                          'title': meta.get('title') or slug_to_title(fname),
+                          'desc':  meta.get('desc', '')
+                      })
+              result[cat] = items
+
+          # About photo — first image found in images/about/
+          about_folder = 'images/about'
+          about_src = existing.get('about', '')
+          if os.path.isdir(about_folder):
+              files = sorted(
+                  f for f in os.listdir(about_folder)
+                  if os.path.splitext(f)[1].lower() in IMAGE_EXTS
+              )
+              if files:
+                  about_src = f'images/about/{files[0]}'
+          result['about'] = about_src
+
+          with open(manifest_path, 'w') as f:
+              json.dump(result, f, indent=2)
+
+          print("images.json written:")
+          for cat in CATEGORIES:
+              print(f"  {cat}: {len(result[cat])} image(s)")
+          print(f"  about: {result['about'] or '(none)'}")
+          EOF
+
+      - name: Commit updated images.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add images.json
+          git diff --cached --quiet || git commit -m "chore: update images.json [skip ci]"
+          git push
