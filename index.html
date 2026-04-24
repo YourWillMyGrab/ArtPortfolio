@@ -579,12 +579,15 @@
         }
 
         /* ─── D20 Easter Egg ─────────────────────────────────────────────────── */
+        :root      { --d20-face: rgba(26,26,26,0.82);  --d20-num: #fff; }
+        [data-theme="dark"] { --d20-face: rgba(210,210,210,0.82); --d20-num: #111; }
+
         #d20 {
             position: fixed;
             bottom: 24px;
             right: 28px;
-            width: 42px;
-            height: 42px;
+            width: 80px;
+            height: 80px;
             opacity: 0;
             cursor: pointer;
             transition: opacity 0.5s ease;
@@ -593,23 +596,108 @@
             user-select: none;
         }
 
-        #d20:hover { opacity: 0.08; }
-
+        #d20:hover  { opacity: 0.07; }
         #d20.visible { opacity: 1 !important; }
 
-        @keyframes d20roll {
-            0%   { transform: rotate(0deg)   scale(1);    }
-            15%  { transform: rotate(120deg) scale(1.3);  }
-            35%  { transform: rotate(260deg) scale(0.85); }
-            55%  { transform: rotate(400deg) scale(1.2);  }
-            75%  { transform: rotate(500deg) scale(0.95); }
-            90%  { transform: rotate(540deg) scale(1.05); }
-            100% { transform: rotate(540deg) scale(1);    }
+        .d20-content {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            perspective: 600px;
         }
 
-        #d20.rolling {
-            animation: d20roll 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        .die {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-out;
+            transform: rotateX(-53deg);
+            counter-reset: steps 0;
         }
+
+        @keyframes d20roll {
+            10% { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+            30% { transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(16px) translateY(16px); }
+            50% { transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-16px) translateY(-16px); }
+            70% { transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg); }
+            90% { transform: rotateX(480deg) rotateY(960deg) rotateZ(0deg); }
+        }
+
+        .die.rolling { animation: d20roll 3s linear; }
+
+        .die[data-face="1"]  { transform: rotateX(-53deg) rotateY(0deg); }
+        .die[data-face="2"]  { transform: rotateX(-53deg) rotateY(72deg); }
+        .die[data-face="3"]  { transform: rotateX(-53deg) rotateY(144deg); }
+        .die[data-face="4"]  { transform: rotateX(-53deg) rotateY(216deg); }
+        .die[data-face="5"]  { transform: rotateX(-53deg) rotateY(288deg); }
+        .die[data-face="16"] { transform: rotateX(127deg) rotateY(-72deg); }
+        .die[data-face="17"] { transform: rotateX(127deg) rotateY(-144deg); }
+        .die[data-face="18"] { transform: rotateX(127deg) rotateY(-216deg); }
+        .die[data-face="19"] { transform: rotateX(127deg) rotateY(-288deg); }
+        .die[data-face="20"] { transform: rotateX(127deg) rotateY(-360deg); }
+        .die[data-face="6"]  { transform: rotateX(11deg) rotateZ(180deg) rotateY(0deg); }
+        .die[data-face="7"]  { transform: rotateX(11deg) rotateZ(180deg) rotateY(72deg); }
+        .die[data-face="8"]  { transform: rotateX(11deg) rotateZ(180deg) rotateY(144deg); }
+        .die[data-face="9"]  { transform: rotateX(11deg) rotateZ(180deg) rotateY(216deg); }
+        .die[data-face="10"] { transform: rotateX(11deg) rotateZ(180deg) rotateY(288deg); }
+        .die[data-face="11"] { transform: rotateX(11deg) rotateY(-252deg); }
+        .die[data-face="12"] { transform: rotateX(11deg) rotateY(-324deg); }
+        .die[data-face="13"] { transform: rotateX(11deg) rotateY(-396deg); }
+        .die[data-face="14"] { transform: rotateX(11deg) rotateY(-468deg); }
+        .die[data-face="15"] { transform: rotateX(11deg) rotateY(-540deg); }
+
+        .die .face {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            margin: 0 -20px;
+            border-left:   20px solid transparent;
+            border-right:  20px solid transparent;
+            border-bottom: 35px solid var(--d20-face);
+            width: 0;
+            height: 0;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            counter-increment: steps 1;
+        }
+
+        .die .face::before {
+            content: counter(steps);
+            position: absolute;
+            top: 9px;
+            left: -40px;
+            color: var(--d20-num);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 32px;
+            width: 80px;
+            height: 35px;
+        }
+
+        .die .face:nth-child(1)  { transform: rotateY(0deg)    translateZ(13.4px) translateY(-5.2px)  rotateX(53deg); }
+        .die .face:nth-child(2)  { transform: rotateY(-72deg)  translateZ(13.4px) translateY(-5.2px)  rotateX(53deg); }
+        .die .face:nth-child(3)  { transform: rotateY(-144deg) translateZ(13.4px) translateY(-5.2px)  rotateX(53deg); }
+        .die .face:nth-child(4)  { transform: rotateY(-216deg) translateZ(13.4px) translateY(-5.2px)  rotateX(53deg); }
+        .die .face:nth-child(5)  { transform: rotateY(-288deg) translateZ(13.4px) translateY(-5.2px)  rotateX(53deg); }
+        .die .face:nth-child(16) { transform: rotateY(-108deg) translateZ(13.4px) translateY(48.5px)  rotateZ(180deg) rotateX(53deg); }
+        .die .face:nth-child(17) { transform: rotateY(-36deg)  translateZ(13.4px) translateY(48.5px)  rotateZ(180deg) rotateX(53deg); }
+        .die .face:nth-child(18) { transform: rotateY(36deg)   translateZ(13.4px) translateY(48.5px)  rotateZ(180deg) rotateX(53deg); }
+        .die .face:nth-child(19) { transform: rotateY(108deg)  translateZ(13.4px) translateY(48.5px)  rotateZ(180deg) rotateX(53deg); }
+        .die .face:nth-child(20) { transform: rotateY(180deg)  translateZ(13.4px) translateY(48.5px)  rotateZ(180deg) rotateX(53deg); }
+        .die .face:nth-child(6)  { transform: rotateY(360deg)  translateZ(30px)   translateY(21.7px)  rotateZ(180deg) rotateX(-11deg); }
+        .die .face:nth-child(7)  { transform: rotateY(288deg)  translateZ(30px)   translateY(21.7px)  rotateZ(180deg) rotateX(-11deg); }
+        .die .face:nth-child(8)  { transform: rotateY(216deg)  translateZ(30px)   translateY(21.7px)  rotateZ(180deg) rotateX(-11deg); }
+        .die .face:nth-child(9)  { transform: rotateY(144deg)  translateZ(30px)   translateY(21.7px)  rotateZ(180deg) rotateX(-11deg); }
+        .die .face:nth-child(10) { transform: rotateY(72deg)   translateZ(30px)   translateY(21.7px)  rotateZ(180deg) rotateX(-11deg); }
+        .die .face:nth-child(11) { transform: rotateY(252deg)  translateZ(30px)   translateY(21.7px)  rotateX(-11deg); }
+        .die .face:nth-child(12) { transform: rotateY(324deg)  translateZ(30px)   translateY(21.7px)  rotateX(-11deg); }
+        .die .face:nth-child(13) { transform: rotateY(396deg)  translateZ(30px)   translateY(21.7px)  rotateX(-11deg); }
+        .die .face:nth-child(14) { transform: rotateY(468deg)  translateZ(30px)   translateY(21.7px)  rotateX(-11deg); }
+        .die .face:nth-child(15) { transform: rotateY(540deg)  translateZ(30px)   translateY(21.7px)  rotateX(-11deg); }
 
         /* ─── Lightbox ──────────────────────────────────────────────────────── */
         #lightbox {
@@ -956,23 +1044,30 @@
 
 <!-- ─── D20 Easter Egg ────────────────────────────────────────────────────────── -->
 <div id="d20" aria-hidden="true">
-    <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
-        <!-- outer triangle (d20 face) -->
-        <polygon id="d20-poly" points="21,2 40,38 2,38"
-            fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linejoin="round"/>
-        <!-- inner decorative lines -->
-        <line x1="21" y1="2"  x2="21" y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
-        <line x1="21" y1="2"  x2="2"  y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35" stroke-dasharray="2 3"/>
-        <line x1="21" y1="2"  x2="40" y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35" stroke-dasharray="2 3"/>
-        <!-- number -->
-        <text id="d20-num" x="21" y="29"
-            text-anchor="middle"
-            font-family="inherit"
-            font-size="13"
-            font-weight="600"
-            fill="currentColor">20</text>
-    </svg>
+    <div class="d20-content">
+        <div class="die">
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+            <figure class="face"></figure>
+        </div>
+    </div>
 </div>
 
 
@@ -1142,37 +1237,38 @@
 
     /* ── D20 Easter Egg ────────────────────────────────────────────────────── */
     (function () {
-        const d20    = document.getElementById('d20');
-        const numEl  = document.getElementById('d20-num');
+        const wrapper = document.getElementById('d20');
+        const die     = wrapper.querySelector('.die');
         let fadeTimer = null;
-        let busy = false;
+        let busy      = false;
 
-        d20.addEventListener('click', () => {
+        wrapper.addEventListener('click', () => {
             if (busy) return;
             busy = true;
 
-            // clear any pending fade
             if (fadeTimer) { clearTimeout(fadeTimer); fadeTimer = null; }
 
-            // pick result
             const roll = Math.floor(Math.random() * 20) + 1;
 
-            // reset animation
-            d20.classList.remove('rolling', 'visible');
-            void d20.offsetWidth; // reflow to restart animation
+            // reset
+            die.removeAttribute('data-face');
+            die.classList.remove('rolling');
+            void die.offsetWidth; // reflow
 
-            numEl.textContent = roll;
-            d20.classList.add('rolling', 'visible');
+            wrapper.classList.add('visible');
+            die.classList.add('rolling');
 
-            // after roll animation finishes, hold for 1.8s then fade out
-            d20.addEventListener('animationend', function onEnd() {
-                d20.removeEventListener('animationend', onEnd);
+            // after 3s animation ends, snap to the rolled face
+            setTimeout(() => {
+                die.classList.remove('rolling');
+                die.setAttribute('data-face', roll);
+
+                // hold 1.8s then fade out
                 fadeTimer = setTimeout(() => {
-                    d20.classList.remove('visible');
-                    // re-enable after fade transition (0.5s)
+                    wrapper.classList.remove('visible');
                     setTimeout(() => { busy = false; }, 500);
                 }, 1800);
-            }, { once: true });
+            }, 3000);
         });
     })();
 </script>
