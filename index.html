@@ -50,15 +50,17 @@
 
         /* Flaviowski logo image theme switching */
         .logo-dark { display: none; }
-        .logo-light { display: inline-block; }
-        [data-theme="dark"] .logo-dark { display: inline-block; }
+        .logo-light { display: block; }
+        [data-theme="dark"] .logo-dark { display: block; }
         [data-theme="dark"] .logo-light { display: none; }
 
-        .nav-logo img, .nav-links img { height: 2.5em; width: auto; vertical-align: middle; display: block; }
+        .nav-logo img, .nav-links img { height: 2.5em; width: auto; }
         .nav-logo { display: flex; align-items: center; gap: 8px; }
         .nav-icon { height: 2.5em; width: auto; }
         .hero-logo { height: auto; width: 340px; max-width: 90%; }
-        #mobile-menu a img { height: 1.4em; width: auto; vertical-align: middle; }
+        .hero-icon { height: auto; width: 160px; max-width: 40%; }
+        .hero-heading { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        #mobile-menu a img { height: 1.4em; width: auto; }
 
         [data-theme="dark"] #nav {
             background: rgba(17,17,17,0.92);
@@ -271,6 +273,17 @@
         }
 
         .section--alt { background: var(--bg-alt); }
+
+        #portfolio { position: relative; overflow: hidden; }
+        .portfolio-bg {
+            position: absolute;
+            inset: 0;
+            background: url('images/vetrinetta/01-untitled-i.jpg') center/cover no-repeat;
+            filter: blur(6px) brightness(0.35);
+            transform: scale(1.05);
+            z-index: 0;
+        }
+        #portfolio .container { position: relative; z-index: 1; }
 
         .section-header {
             text-align: center;
@@ -846,8 +859,6 @@
 <nav id="nav">
     <div class="container">
         <a class="nav-logo" href="#vetrinetta">
-            <img src="images/Logo_nero.png" alt="Logo" class="logo-light nav-icon">
-            <img src="images/Logo_bianco.png" alt="Logo" class="logo-dark nav-icon">
             <img src="images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light">
             <img src="images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark">
         </a>
@@ -889,7 +900,9 @@
 <section id="vetrinetta" class="section">
     <div class="container">
         <div class="section-header">
-            <h1>
+            <h1 class="hero-heading">
+                <img src="images/Logo_nero.png" alt="Logo" class="logo-light hero-icon">
+                <img src="images/Logo_bianco.png" alt="Logo" class="logo-dark hero-icon">
                 <img src="images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light hero-logo">
                 <img src="images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark hero-logo">
             </h1>
@@ -908,6 +921,7 @@
 
 <!-- ─── Portfolio ───────────────────────────────────────────────────────────── -->
 <section id="portfolio" class="section section--alt">
+    <div class="portfolio-bg" aria-hidden="true"></div>
     <div class="container">
         <div class="section-header">
             <h2>Portfolio</h2>
