@@ -54,7 +54,9 @@
         [data-theme="dark"] .logo-dark { display: inline-block; }
         [data-theme="dark"] .logo-light { display: none; }
 
-        .nav-logo img, .nav-links img { height: 1.6em; width: auto; vertical-align: middle; }
+        .nav-logo img, .nav-links img { height: 2.5em; width: auto; vertical-align: middle; display: block; }
+        .nav-logo { display: flex; align-items: center; gap: 8px; }
+        .nav-icon { height: 2.5em; width: auto; }
         .hero-logo { height: auto; width: 340px; max-width: 90%; }
         #mobile-menu a img { height: 1.4em; width: auto; vertical-align: middle; }
 
@@ -201,9 +203,12 @@
             font-size: 0.8rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            transition: color 0.2s;
             padding-bottom: 2px;
             border-bottom: 1px solid transparent;
+        }
+
+        .nav-links a:has(img) {
+            padding-bottom: 8px;
         }
 
         .nav-links a:hover,
@@ -841,6 +846,8 @@
 <nav id="nav">
     <div class="container">
         <a class="nav-logo" href="#vetrinetta">
+            <img src="images/Logo_nero.png" alt="Logo" class="logo-light nav-icon">
+            <img src="images/Logo_bianco.png" alt="Logo" class="logo-dark nav-icon">
             <img src="images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light">
             <img src="images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark">
         </a>
