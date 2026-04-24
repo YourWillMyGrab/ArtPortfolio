@@ -569,12 +569,46 @@
 
         /* ─── Footer ────────────────────────────────────────────────────────── */
         footer {
+            position: relative;
             border-top: 1px solid var(--border);
             padding: 32px var(--spacing);
             text-align: center;
             color: #bbb;
             font-size: 0.75rem;
             letter-spacing: 0.04em;
+        }
+
+        /* ─── D20 Easter Egg ─────────────────────────────────────────────────── */
+        #d20 {
+            position: fixed;
+            bottom: 24px;
+            right: 28px;
+            width: 42px;
+            height: 42px;
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+            z-index: 500;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        #d20:hover { opacity: 0.08; }
+
+        #d20.visible { opacity: 1 !important; }
+
+        @keyframes d20roll {
+            0%   { transform: rotate(0deg)   scale(1);    }
+            15%  { transform: rotate(120deg) scale(1.3);  }
+            35%  { transform: rotate(260deg) scale(0.85); }
+            55%  { transform: rotate(400deg) scale(1.2);  }
+            75%  { transform: rotate(500deg) scale(0.95); }
+            90%  { transform: rotate(540deg) scale(1.05); }
+            100% { transform: rotate(540deg) scale(1);    }
+        }
+
+        #d20.rolling {
+            animation: d20roll 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         /* ─── Lightbox ──────────────────────────────────────────────────────── */
@@ -922,6 +956,27 @@
     &copy; <span id="year"></span> Flaviowski. Tutti i diritti riservati.
 </footer>
 
+<!-- ─── D20 Easter Egg ────────────────────────────────────────────────────────── -->
+<div id="d20" aria-hidden="true">
+    <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+        <!-- outer triangle (d20 face) -->
+        <polygon id="d20-poly" points="21,2 40,38 2,38"
+            fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linejoin="round"/>
+        <!-- inner decorative lines -->
+        <line x1="21" y1="2"  x2="21" y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+        <line x1="21" y1="2"  x2="2"  y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35" stroke-dasharray="2 3"/>
+        <line x1="21" y1="2"  x2="40" y2="38" stroke="currentColor" stroke-width="0.8" opacity="0.35" stroke-dasharray="2 3"/>
+        <!-- number -->
+        <text id="d20-num" x="21" y="29"
+            text-anchor="middle"
+            font-family="inherit"
+            font-size="13"
+            font-weight="600"
+            fill="currentColor">20</text>
+    </svg>
+</div>
+
 
 <!-- ─── Lightbox ─────────────────────────────────────────────────────────────── -->
 <div id="lightbox" role="dialog" aria-modal="true" aria-label="Dettaglio opera" onclick="handleLightboxClick(event)">
@@ -1086,6 +1141,42 @@
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') closeLightbox();
     });
+
+    /* ── D20 Easter Egg ────────────────────────────────────────────────────── */
+    (function () {
+        const d20    = document.getElementById('d20');
+        const numEl  = document.getElementById('d20-num');
+        let fadeTimer = null;
+        let busy = false;
+
+        d20.addEventListener('click', () => {
+            if (busy) return;
+            busy = true;
+
+            // clear any pending fade
+            if (fadeTimer) { clearTimeout(fadeTimer); fadeTimer = null; }
+
+            // pick result
+            const roll = Math.floor(Math.random() * 20) + 1;
+
+            // reset animation
+            d20.classList.remove('rolling', 'visible');
+            void d20.offsetWidth; // reflow to restart animation
+
+            numEl.textContent = roll;
+            d20.classList.add('rolling', 'visible');
+
+            // after roll animation finishes, hold for 1.8s then fade out
+            d20.addEventListener('animationend', function onEnd() {
+                d20.removeEventListener('animationend', onEnd);
+                fadeTimer = setTimeout(() => {
+                    d20.classList.remove('visible');
+                    // re-enable after fade transition (0.5s)
+                    setTimeout(() => { busy = false; }, 500);
+                }, 1800);
+            }, { once: true });
+        });
+    })();
 </script>
 
 </body>
