@@ -48,6 +48,16 @@
             --border:   #2a2a2a;
         }
 
+        /* Flaviowski logo image theme switching */
+        .logo-dark { display: none; }
+        .logo-light { display: inline-block; }
+        [data-theme="dark"] .logo-dark { display: inline-block; }
+        [data-theme="dark"] .logo-light { display: none; }
+
+        .nav-logo img, .nav-links img { height: 1.2em; vertical-align: middle; }
+        .hero-logo { height: 2.5em; }
+        #mobile-menu a img { height: 1.4em; vertical-align: middle; }
+
         [data-theme="dark"] #nav {
             background: rgba(17,17,17,0.92);
         }
@@ -830,9 +840,15 @@
 <!-- ─── Navigation ──────────────────────────────────────────────────────────── -->
 <nav id="nav">
     <div class="container">
-        <a class="nav-logo" href="#vetrinetta">Flaviowski</a>
+        <a class="nav-logo" href="#vetrinetta">
+            <img src="/images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light">
+            <img src="/images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark">
+        </a>
         <ul class="nav-links">
-            <li><a href="#vetrinetta" class="active">Flaviowski</a></li>
+            <li><a href="#vetrinetta" class="active">
+                <img src="/images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light">
+                <img src="/images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark">
+            </a></li>
             <li><a href="#portfolio">Portfolio</a></li>
             <li><a href="#about">Chi sono</a></li>
             <li><a href="#shop">Commissioni</a></li>
@@ -851,7 +867,10 @@
 
 <!-- Mobile menu -->
 <div id="mobile-menu">
-    <a href="#vetrinetta" onclick="closeMenu()">Flaviowski</a>
+    <a href="#vetrinetta" onclick="closeMenu()">
+        <img src="/images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light">
+        <img src="/images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark">
+    </a>
     <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
     <a href="#about" onclick="closeMenu()">Chi sono</a>
     <a href="#shop" onclick="closeMenu()">Commissioni</a>
@@ -863,7 +882,10 @@
 <section id="vetrinetta" class="section">
     <div class="container">
         <div class="section-header">
-            <h1>Flaviowski</h1>
+            <h1>
+                <img src="/images/Flaviowski_nero.png" alt="Flaviowski" class="logo-light hero-logo">
+                <img src="/images/Flaviowski_bianco.png" alt="Flaviowski" class="logo-dark hero-logo">
+            </h1>
             <p>Dove la musica diviene immagine</p>
         </div>
 
