@@ -279,7 +279,7 @@
             position: absolute;
             inset: 0;
             background: url('images/background/background.jpg') center/cover no-repeat;
-            filter: blur(6px) brightness(0.35);
+            filter: blur(1px) brightness(0.35);
             transform: scale(1.05);
             z-index: 0;
         }
@@ -846,10 +846,36 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .nav-burger { display: flex; }
+            .section { padding: 60px 0 48px; }
             #vetrinetta .art-grid { grid-template-columns: 1fr; }
             #vetrinetta .art-item:first-child { grid-row: span 1; }
-            .art-grid { grid-template-columns: 1fr; }
-            .tabs-nav { flex-direction: column; align-items: center; }
+            #portfolio .art-grid {
+                grid-template-columns: unset;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                gap: var(--spacing);
+            }
+            #portfolio .art-grid::-webkit-scrollbar { display: none; }
+            #portfolio .art-grid .art-item {
+                flex: 0 0 80vw;
+                max-width: 320px;
+                scroll-snap-align: start;
+            }
+            .tabs-nav {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 4px;
+            }
+            .tabs-nav::-webkit-scrollbar { display: none; }
+            .tab-link { flex-shrink: 0; }
         }
     </style>
 </head>

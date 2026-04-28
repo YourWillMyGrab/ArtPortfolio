@@ -82,6 +82,18 @@ jobs:
                   about_src = f'images/about/{files[0]}'
           result['about'] = about_src
 
+           # background photo — first image found in images/background/
+          background_folder = 'images/background'
+          background_src = existing.get('background', '')
+          if os.path.isdir(background_folder):
+              files = sorted(
+                  f for f in os.listdir(background_folder)
+                  if os.path.splitext(f)[1].lower() in IMAGE_EXTS
+              )
+              if files:
+                  background_src = f'images/background/{files[0]}'
+          result['background'] = background_src
+
           with open(manifest_path, 'w') as f:
               json.dump(result, f, indent=2)
 
